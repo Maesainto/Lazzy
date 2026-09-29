@@ -6,8 +6,13 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EC36171E306BAAEF00202324 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC36171D306BAAEF00202324 /* HealthKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EC34FC983066ACBE0098DB75 /* Lazzy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lazzy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC36171D306BAAEF00202324 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +40,7 @@
 		EC34FC953066ACBE0098DB75 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				EC36171E306BAAEF00202324 /* HealthKit.framework in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -44,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				EC34FC9A3066ACBE0098DB75 /* Lazzy */,
+				EC36171C306BAAEF00202324 /* Frameworks */,
 				EC34FC993066ACBE0098DB75 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +61,14 @@
 				EC34FC983066ACBE0098DB75 /* Lazzy.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		EC36171C306BAAEF00202324 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC36171D306BAAEF00202324 /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,11 +148,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Lazzy/Lazzy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 898H9422Y5;
+				DEVELOPMENT_TEAM = 4G37KK8GD8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lazzy/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Nous avons besoin d'accéder à vos pas pour valider vos objectifs quotidiens.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -148,7 +166,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ISA-NUM1.Lazzy";
+				PRODUCT_BUNDLE_IDENTIFIER = Simon.Lazzy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -165,11 +183,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Lazzy/Lazzy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 898H9422Y5;
+				DEVELOPMENT_TEAM = 4G37KK8GD8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lazzy/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Nous avons besoin d'accéder à vos pas pour valider vos objectifs quotidiens.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -180,7 +201,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ISA-NUM1.Lazzy";
+				PRODUCT_BUNDLE_IDENTIFIER = Simon.Lazzy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
