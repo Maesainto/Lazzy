@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        do { try LegacyDataImport.run() }
+        catch { NSLog("Import local Lazzy incomplet ; la sauvegarde est conservée pour réessayer.") }
         return true
     }
 

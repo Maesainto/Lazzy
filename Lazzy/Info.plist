@@ -21,5 +21,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Prends une photo pour ton profil ou pour prouver que tu as relevé ton gage.</string>
 </dict>
 </plist>

@@ -1,163 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CQk-0e-igb">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
-    <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-    </dependencies>
-    <scenes>
-        <!--Profil-->
-        <scene sceneID="rdR-6L-nn0">
-            <objects>
-                <viewController id="vm1-p7-rOr" customClass="ViewController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AOj-BY-ihP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pseudo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Upv-fR-GjC">
-                                <rect key="frame" x="43" y="76" width="75" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dpl-nj-5d2">
-                                <rect key="frame" x="283" y="73" width="103" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Paramètre"/>
-                                <connections>
-                                    <segue destination="EeA-P6-CP4" kind="show" id="3qg-U2-zbx"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQh-ne-pbx">
-                                <rect key="frame" x="16" y="355" width="310" height="166"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OYC-77-cye" customClass="CircularProgressView" customModule="Lazzy" customModuleProvider="target">
-                                <rect key="frame" x="86" y="193" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rond" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="B00-le-hOS">
-                                        <rect key="frame" x="0.0" y="54" width="230" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <rect key="contentStretch" x="0.050000000000000003" y="0.0" width="1" height="1"/>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Fwo-oo-bTv"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Profil" id="BI5-cq-Efw"/>
-                    <connections>
-                        <outlet property="progressView" destination="OYC-77-cye" id="UvW-P0-eiC"/>
-                        <outlet property="stepsLabel" destination="B00-le-hOS" id="15S-gC-DFY"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nuK-ji-cdZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="598" y="-1142"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="rPA-Xy-Zlb">
-            <objects>
-                <viewController id="EeA-P6-CP4" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ljp-XP-V8t">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="mVp-OF-CHb"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="NMM-wz-r4c"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eQc-l4-hDb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1631" y="-1142"/>
-        </scene>
-        <!--Amis-->
-        <scene sceneID="cBH-7M-MuB">
-            <objects>
-                <viewController id="tfl-uF-OSP" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xIB-Om-k8u">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2l4-jA-MKw">
-                                <rect key="frame" x="80" y="59" width="233" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Groupe "/>
-                                    <segment title="Amis"/>
-                                </segments>
-                            </segmentedControl>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="2Gb-hy-xto"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Amis" id="eRs-Dl-zl7"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lbv-al-E8l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="597.70992366412213" y="-449.29577464788736"/>
-        </scene>
-        <!--Mur de la honte-->
-        <scene sceneID="Cid-ZB-TB1">
-            <objects>
-                <viewController id="uyG-Tk-nyt" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="RdF-Qp-Hib">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mur de la honte" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msV-ds-6uQ">
-                                <rect key="frame" x="68" y="90" width="257" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="v35-dp-jWE"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mur de la honte" id="lN7-mp-3LB"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aLr-2v-km4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="597.70992366412213" y="262.67605633802816"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="rF4-aR-eM5">
-            <objects>
-                <tabBarController id="CQk-0e-igb" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ojI-sI-nO2">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="tfl-uF-OSP" kind="relationship" relationship="viewControllers" id="ueC-J4-iCO"/>
-                        <segue destination="vm1-p7-rOr" kind="relationship" relationship="viewControllers" id="7AZ-fL-fJW"/>
-                        <segue destination="uyG-Tk-nyt" kind="relationship" relationship="viewControllers" id="Nwh-hb-5zj"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="86w-WW-tf1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-544" y="-265"/>
-        </scene>
-    </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
-</document>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lazzy-tabs">
+<device id="retina6_12" orientation="portrait" appearance="light"/>
+<dependencies><plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/><capability name="Safe area layout guides" minToolsVersion="9.0"/><capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/></dependencies>
+<scenes><scene sceneID="tab-scene"><objects>
+<tabBarController id="lazzy-tabs" customClass="LazzyTabBarController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
+<tabBar key="tabBar" contentMode="scaleToFill" id="lazzy-tabbar"><rect key="frame" x="0" y="803" width="393" height="49"/><autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/></tabBar>
+<connections><segue destination="home-controller" kind="relationship" relationship="viewControllers" id="tab-home"/><segue destination="wall-controller" kind="relationship" relationship="viewControllers" id="tab-wall"/><segue destination="groups-controller" kind="relationship" relationship="viewControllers" id="tab-groups"/><segue destination="settings-controller" kind="relationship" relationship="viewControllers" id="tab-settings"/></connections></tabBarController>
+<placeholder placeholderIdentifier="IBFirstResponder" id="tab-responder" sceneMemberID="firstResponder"/></objects><point key="canvasLocation" x="0" y="0"/></scene><!-- Accueil -->
+<scene sceneID="home-scene"><objects>
+<viewController storyboardIdentifier="home" id="home-controller" customClass="ViewController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
+<view key="view" contentMode="scaleToFill" id="home-view"><rect key="frame" x="0" y="0" width="393" height="852"/>
+<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<subviews><scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="home-scroll">
+<rect key="frame" x="0" y="62" width="393" height="707"/>
+<subviews><stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="home-stack" userLabel="Contenu assemblé dans ViewController.swift">
+<rect key="frame" x="24" y="16" width="345" height="675"/></stackView></subviews>
+<constraints>
+<constraint firstItem="home-stack" firstAttribute="top" secondItem="home-content-guide" secondAttribute="top" constant="16" id="home-top"/>
+<constraint firstItem="home-content-guide" firstAttribute="bottom" secondItem="home-stack" secondAttribute="bottom" constant="32" id="home-bottom"/>
+<constraint firstItem="home-stack" firstAttribute="centerX" secondItem="home-frame-guide" secondAttribute="centerX" id="home-center"/>
+<constraint firstItem="home-stack" firstAttribute="width" secondItem="home-frame-guide" secondAttribute="width" constant="-48" priority="750" id="home-width"/>
+<constraint firstItem="home-stack" firstAttribute="width" relation="lessThanOrEqual" constant="560" id="home-max-width"/>
+<constraint firstItem="home-stack" firstAttribute="width" relation="lessThanOrEqual" secondItem="home-frame-guide" secondAttribute="width" constant="-48" id="home-available-width"/>
+<constraint firstItem="home-content-guide" firstAttribute="width" secondItem="home-frame-guide" secondAttribute="width" id="home-content-width"/>
+</constraints>
+<viewLayoutGuide key="contentLayoutGuide" id="home-content-guide"/><viewLayoutGuide key="frameLayoutGuide" id="home-frame-guide"/>
+</scrollView></subviews>
+<viewLayoutGuide key="safeArea" id="home-safe"/>
+<color key="backgroundColor" red="0.9686" green="0.9608" blue="0.9373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+<constraints>
+<constraint firstItem="home-scroll" firstAttribute="top" secondItem="home-safe" secondAttribute="top" id="home-scroll-top"/>
+<constraint firstItem="home-scroll" firstAttribute="leading" secondItem="home-view" secondAttribute="leading" id="home-scroll-leading"/>
+<constraint firstItem="home-scroll" firstAttribute="trailing" secondItem="home-view" secondAttribute="trailing" id="home-scroll-trailing"/>
+<constraint firstItem="home-scroll" firstAttribute="bottom" secondItem="home-safe" secondAttribute="bottom" id="home-scroll-bottom"/>
+</constraints></view>
+<tabBarItem key="tabBarItem" title="Accueil" id="home-tab-item"/>
+<connections><outlet property="scrollView" destination="home-scroll" id="home-scroll-outlet"/><outlet property="contentStack" destination="home-stack" id="home-stack-outlet"/></connections>
+</viewController><placeholder placeholderIdentifier="IBFirstResponder" id="home-responder" sceneMemberID="firstResponder"/>
+</objects><point key="canvasLocation" x="900" y="-1500"/></scene><!-- Le mur -->
+<scene sceneID="wall-scene"><objects>
+<viewController storyboardIdentifier="wall" id="wall-controller" customClass="WallViewController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
+<view key="view" contentMode="scaleToFill" id="wall-view"><rect key="frame" x="0" y="0" width="393" height="852"/>
+<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<subviews><scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wall-scroll">
+<rect key="frame" x="0" y="62" width="393" height="707"/>
+<subviews><stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="wall-stack" userLabel="Contenu assemblé dans WallViewController.swift">
+<rect key="frame" x="24" y="16" width="345" height="675"/></stackView></subviews>
+<constraints>
+<constraint firstItem="wall-stack" firstAttribute="top" secondItem="wall-content-guide" secondAttribute="top" constant="16" id="wall-top"/>
+<constraint firstItem="wall-content-guide" firstAttribute="bottom" secondItem="wall-stack" secondAttribute="bottom" constant="32" id="wall-bottom"/>
+<constraint firstItem="wall-stack" firstAttribute="centerX" secondItem="wall-frame-guide" secondAttribute="centerX" id="wall-center"/>
+<constraint firstItem="wall-stack" firstAttribute="width" secondItem="wall-frame-guide" secondAttribute="width" constant="-48" priority="750" id="wall-width"/>
+<constraint firstItem="wall-stack" firstAttribute="width" relation="lessThanOrEqual" constant="560" id="wall-max-width"/>
+<constraint firstItem="wall-stack" firstAttribute="width" relation="lessThanOrEqual" secondItem="wall-frame-guide" secondAttribute="width" constant="-48" id="wall-available-width"/>
+<constraint firstItem="wall-content-guide" firstAttribute="width" secondItem="wall-frame-guide" secondAttribute="width" id="wall-content-width"/>
+</constraints>
+<viewLayoutGuide key="contentLayoutGuide" id="wall-content-guide"/><viewLayoutGuide key="frameLayoutGuide" id="wall-frame-guide"/>
+</scrollView></subviews>
+<viewLayoutGuide key="safeArea" id="wall-safe"/>
+<color key="backgroundColor" red="0.9686" green="0.9608" blue="0.9373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+<constraints>
+<constraint firstItem="wall-scroll" firstAttribute="top" secondItem="wall-safe" secondAttribute="top" id="wall-scroll-top"/>
+<constraint firstItem="wall-scroll" firstAttribute="leading" secondItem="wall-view" secondAttribute="leading" id="wall-scroll-leading"/>
+<constraint firstItem="wall-scroll" firstAttribute="trailing" secondItem="wall-view" secondAttribute="trailing" id="wall-scroll-trailing"/>
+<constraint firstItem="wall-scroll" firstAttribute="bottom" secondItem="wall-safe" secondAttribute="bottom" id="wall-scroll-bottom"/>
+</constraints></view>
+<tabBarItem key="tabBarItem" title="Le mur" id="wall-tab-item"/>
+<connections><outlet property="scrollView" destination="wall-scroll" id="wall-scroll-outlet"/><outlet property="contentStack" destination="wall-stack" id="wall-stack-outlet"/></connections>
+</viewController><placeholder placeholderIdentifier="IBFirstResponder" id="wall-responder" sceneMemberID="firstResponder"/>
+</objects><point key="canvasLocation" x="900" y="-500"/></scene><!-- Groupes -->
+<scene sceneID="groups-scene"><objects>
+<viewController storyboardIdentifier="groups" id="groups-controller" customClass="GroupsViewController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
+<view key="view" contentMode="scaleToFill" id="groups-view"><rect key="frame" x="0" y="0" width="393" height="852"/>
+<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<subviews><scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="groups-scroll">
+<rect key="frame" x="0" y="62" width="393" height="707"/>
+<subviews><stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="groups-stack" userLabel="Contenu assemblé dans GroupsViewController.swift">
+<rect key="frame" x="24" y="16" width="345" height="675"/></stackView></subviews>
+<constraints>
+<constraint firstItem="groups-stack" firstAttribute="top" secondItem="groups-content-guide" secondAttribute="top" constant="16" id="groups-top"/>
+<constraint firstItem="groups-content-guide" firstAttribute="bottom" secondItem="groups-stack" secondAttribute="bottom" constant="32" id="groups-bottom"/>
+<constraint firstItem="groups-stack" firstAttribute="centerX" secondItem="groups-frame-guide" secondAttribute="centerX" id="groups-center"/>
+<constraint firstItem="groups-stack" firstAttribute="width" secondItem="groups-frame-guide" secondAttribute="width" constant="-48" priority="750" id="groups-width"/>
+<constraint firstItem="groups-stack" firstAttribute="width" relation="lessThanOrEqual" constant="560" id="groups-max-width"/>
+<constraint firstItem="groups-stack" firstAttribute="width" relation="lessThanOrEqual" secondItem="groups-frame-guide" secondAttribute="width" constant="-48" id="groups-available-width"/>
+<constraint firstItem="groups-content-guide" firstAttribute="width" secondItem="groups-frame-guide" secondAttribute="width" id="groups-content-width"/>
+</constraints>
+<viewLayoutGuide key="contentLayoutGuide" id="groups-content-guide"/><viewLayoutGuide key="frameLayoutGuide" id="groups-frame-guide"/>
+</scrollView></subviews>
+<viewLayoutGuide key="safeArea" id="groups-safe"/>
+<color key="backgroundColor" red="0.9686" green="0.9608" blue="0.9373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+<constraints>
+<constraint firstItem="groups-scroll" firstAttribute="top" secondItem="groups-safe" secondAttribute="top" id="groups-scroll-top"/>
+<constraint firstItem="groups-scroll" firstAttribute="leading" secondItem="groups-view" secondAttribute="leading" id="groups-scroll-leading"/>
+<constraint firstItem="groups-scroll" firstAttribute="trailing" secondItem="groups-view" secondAttribute="trailing" id="groups-scroll-trailing"/>
+<constraint firstItem="groups-scroll" firstAttribute="bottom" secondItem="groups-safe" secondAttribute="bottom" id="groups-scroll-bottom"/>
+</constraints></view>
+<tabBarItem key="tabBarItem" title="Groupes" id="groups-tab-item"/>
+<connections><outlet property="scrollView" destination="groups-scroll" id="groups-scroll-outlet"/><outlet property="contentStack" destination="groups-stack" id="groups-stack-outlet"/></connections>
+</viewController><placeholder placeholderIdentifier="IBFirstResponder" id="groups-responder" sceneMemberID="firstResponder"/>
+</objects><point key="canvasLocation" x="900" y="500"/></scene><!-- Paramètres -->
+<scene sceneID="settings-scene"><objects>
+<viewController storyboardIdentifier="settings" id="settings-controller" customClass="SettingsViewController" customModule="Lazzy" customModuleProvider="target" sceneMemberID="viewController">
+<view key="view" contentMode="scaleToFill" id="settings-view"><rect key="frame" x="0" y="0" width="393" height="852"/>
+<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+<subviews><scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="settings-scroll">
+<rect key="frame" x="0" y="62" width="393" height="707"/>
+<subviews><stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="settings-stack" userLabel="Contenu assemblé dans SettingsViewController.swift">
+<rect key="frame" x="24" y="16" width="345" height="675"/></stackView></subviews>
+<constraints>
+<constraint firstItem="settings-stack" firstAttribute="top" secondItem="settings-content-guide" secondAttribute="top" constant="16" id="settings-top"/>
+<constraint firstItem="settings-content-guide" firstAttribute="bottom" secondItem="settings-stack" secondAttribute="bottom" constant="32" id="settings-bottom"/>
+<constraint firstItem="settings-stack" firstAttribute="centerX" secondItem="settings-frame-guide" secondAttribute="centerX" id="settings-center"/>
+<constraint firstItem="settings-stack" firstAttribute="width" secondItem="settings-frame-guide" secondAttribute="width" constant="-48" priority="750" id="settings-width"/>
+<constraint firstItem="settings-stack" firstAttribute="width" relation="lessThanOrEqual" constant="560" id="settings-max-width"/>
+<constraint firstItem="settings-stack" firstAttribute="width" relation="lessThanOrEqual" secondItem="settings-frame-guide" secondAttribute="width" constant="-48" id="settings-available-width"/>
+<constraint firstItem="settings-content-guide" firstAttribute="width" secondItem="settings-frame-guide" secondAttribute="width" id="settings-content-width"/>
+</constraints>
+<viewLayoutGuide key="contentLayoutGuide" id="settings-content-guide"/><viewLayoutGuide key="frameLayoutGuide" id="settings-frame-guide"/>
+</scrollView></subviews>
+<viewLayoutGuide key="safeArea" id="settings-safe"/>
+<color key="backgroundColor" red="0.9686" green="0.9608" blue="0.9373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+<constraints>
+<constraint firstItem="settings-scroll" firstAttribute="top" secondItem="settings-safe" secondAttribute="top" id="settings-scroll-top"/>
+<constraint firstItem="settings-scroll" firstAttribute="leading" secondItem="settings-view" secondAttribute="leading" id="settings-scroll-leading"/>
+<constraint firstItem="settings-scroll" firstAttribute="trailing" secondItem="settings-view" secondAttribute="trailing" id="settings-scroll-trailing"/>
+<constraint firstItem="settings-scroll" firstAttribute="bottom" secondItem="settings-safe" secondAttribute="bottom" id="settings-scroll-bottom"/>
+</constraints></view>
+<tabBarItem key="tabBarItem" title="Paramètres" id="settings-tab-item"/>
+<connections><outlet property="scrollView" destination="settings-scroll" id="settings-scroll-outlet"/><outlet property="contentStack" destination="settings-stack" id="settings-stack-outlet"/></connections>
+</viewController><placeholder placeholderIdentifier="IBFirstResponder" id="settings-responder" sceneMemberID="firstResponder"/>
+</objects><point key="canvasLocation" x="900" y="1500"/></scene></scenes></document>
