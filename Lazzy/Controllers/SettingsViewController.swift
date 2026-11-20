@@ -13,7 +13,12 @@ final class SettingsViewController: LazzyScreenController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        heading("À ton image", title: "Tes paramètres.", subtitle: "Ton profil, ton rythme, tes petits défis.")
+        title = "Paramètre"
+        let close = UIBarButtonItem(systemItem: .close, primaryAction: UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        })
+        close.accessibilityLabel = "Retour à l’accueil"
+        navigationItem.leftBarButtonItem = close
         avatarContainer.heightAnchor.constraint(equalToConstant: 86).isActive = true
         let changePhoto = LazzyTheme.button("Modifier la photo", symbol: "camera", filled: false) { [weak self] in self?.choosePhoto() }
         let profileHeader = LazzyTheme.stack([avatarContainer, badgePreview, changePhoto], spacing: 8)
@@ -51,7 +56,7 @@ final class SettingsViewController: LazzyScreenController, UITextFieldDelegate {
         contentStack.addArrangedSubview(saveStatus)
 
         let health = LazzyTheme.button("Connexion Apple Santé", symbol: "heart", filled: false) { [weak self] in
-            self?.message("Tes pas, via Apple Santé", "Lazzy lit uniquement ton nombre de pas du jour.\n\nPour vérifier l’accès, ouvre Santé, puis ton profil et la liste des apps autorisées. Un compteur à zéro peut aussi signifier qu’aucune donnée n’est accessible.\n\nSur le simulateur, aucun pas fictif n’est ajouté.")
+            self?.message("Ton activité via Apple Santé", "Lazzy lit tes pas, ta distance à pied et tes calories actives du jour.\n\nTu peux gérer l’accès à chaque donnée dans Santé, depuis ton profil et la liste des apps autorisées. Un tiret indique qu’une donnée n’est pas accessible.")
         }
         contentStack.addArrangedSubview(LazzyTheme.padded(LazzyTheme.stack([
             health,
@@ -65,12 +70,9 @@ final class SettingsViewController: LazzyScreenController, UITextFieldDelegate {
         toolbar.items = [UIBarButtonItem(systemItem: .flexibleSpace), UIBarButtonItem(title: "Terminé", style: .prominent, target: self, action: #selector(closeKeyboard))]
         [nameField, bioField, goalField].forEach { $0.inputAccessoryView = toolbar }
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardChanged(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
         let profile = ProfileStore.shared
         nameField.text = profile.name; bioField.text = profile.bio; goalField.text = String(profile.dailyGoal)
-        pendingAvatar = nil
         updateAvatar(profile.avatar)
         updateTrophies()
     }
@@ -112,9 +114,11 @@ final class SettingsViewController: LazzyScreenController, UITextFieldDelegate {
     }
     private func saveProfile() {
         view.endEditing(true)
-        let name = (nameField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let name = ProfileStore.validatedName(nameField.text ?? "") else {
+            message("Pseudo invalide", "Ton pseudo doit contenir entre 1 et 30 caractères.")
+            return
+        }
         let bio = (bioField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        guard (1...30).contains(name.count) else { message("Pseudo invalide", "Ton pseudo doit contenir entre 1 et 30 caractères."); return }
         guard bio.count <= 120 else { message("Bio trop longue", "Limite ta bio à 120 caractères."); return }
         guard let goal = Int(goalField.text ?? ""), goal > 0 else { message("Objectif invalide", "Saisis un nombre entier de pas supérieur à zéro."); return }
         do {

@@ -8,9 +8,12 @@ final class ViewController: LazzyScreenController {
     private let remainingLabel = LazzyTheme.label("", size: 13, weight: .medium, color: .white)
     private let percentLabel = LazzyTheme.label("0 %", size: 14, weight: .bold, color: LazzyTheme.lime)
     private let greetingLabel = LazzyTheme.label("", size: 31, weight: .bold)
-    private let healthLabel = LazzyTheme.label("Connexion à Santé…", size: 12, color: LazzyTheme.muted)
+    private let profileAvatar = UIImageView()
+    private let distanceLabel = LazzyTheme.label("—", size: 19, weight: .bold)
+    private let caloriesLabel = LazzyTheme.label("—", size: 19, weight: .bold)
+    private let healthLabel = LazzyTheme.label("Lecture de Santé…", size: 12, color: LazzyTheme.muted)
+    private let trophyList = LazzyTheme.stack(spacing: 16)
     private let refreshControl = UIRefreshControl()
-    private var isLoadingHealthDetails = false
     private var steps: Double = 0
     private var healthAuthorizationCompleted = false
     private var isRefreshing = false
@@ -19,27 +22,32 @@ final class ViewController: LazzyScreenController {
         super.viewDidLoad()
         buildInterface()
         NotificationCenter.default.addObserver(self, selector: #selector(updateProfile), name: .lazzyProfileChanged, object: nil)
-        healthManager.requestAuthorization { [weak self] success in
-            guard let self else { return }
-            self.healthAuthorizationCompleted = success
-            if success { self.refresh() } else {
-                self.healthLabel.text = self.healthManager.isAvailable ? "Connexion Santé à vérifier" : "Santé indisponible dans le simulateur"
-                self.refreshControl.endRefreshing()
-            }
-        }
+        refresh()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateProfile()
     }
     private func buildInterface() {
-        let settings = LazzyTheme.button("", symbol: "person.crop.circle.fill", filled: false) { [weak self] in self?.tabBarController?.selectedIndex = 3 }
-        settings.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
-        settings.configuration?.contentInsets = .zero
-        settings.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        settings.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        let settings = UIButton(type: .system, primaryAction: UIAction { [weak self] _ in
+            self?.showSettings()
+        })
         settings.accessibilityLabel = "Ouvrir mon profil"
         settings.accessibilityIdentifier = "home.profile"
+        let avatarSize: CGFloat = 50
+        profileAvatar.tintColor = LazzyTheme.green
+        profileAvatar.layer.cornerRadius = avatarSize / 2
+        profileAvatar.clipsToBounds = true
+        profileAvatar.translatesAutoresizingMaskIntoConstraints = false
+        settings.addSubview(profileAvatar)
+        NSLayoutConstraint.activate([
+            settings.widthAnchor.constraint(equalToConstant: 60),
+            settings.heightAnchor.constraint(equalToConstant: 60),
+            profileAvatar.centerXAnchor.constraint(equalTo: settings.centerXAnchor),
+            profileAvatar.centerYAnchor.constraint(equalTo: settings.centerYAnchor),
+            profileAvatar.widthAnchor.constraint(equalToConstant: avatarSize),
+            profileAvatar.heightAnchor.constraint(equalToConstant: avatarSize)
+        ])
         contentStack.addArrangedSubview(LazzyTheme.row(greetingLabel, settings))
 
         let top = LazzyTheme.row(LazzyTheme.label("Ton minimum de pas du jour", size: 15, weight: .semibold, color: .white),
@@ -66,70 +74,144 @@ final class ViewController: LazzyScreenController {
         let card = LazzyTheme.stack([top, ringContainer, divider, LazzyTheme.row(remainingLabel, percentLabel)], spacing: 14)
         let progressCard = LazzyTheme.padded(card, background: LazzyTheme.green, radius: 30)
         contentStack.addArrangedSubview(progressCard)
-        let healthRow = LazzyTheme.stack([LazzyTheme.icon("heart.fill", color: LazzyTheme.orange, size: 13), healthLabel], axis: .horizontal, spacing: 7)
-        healthRow.alignment = .center
-        contentStack.addArrangedSubview(healthRow)
-        let healthDetails = LazzyTheme.button("Détails Santé", symbol: "info.circle", filled: false) { [weak self] in
-            self?.showHealthDetails()
-        }
-        contentStack.addArrangedSubview(healthDetails)
-        contentStack.setCustomSpacing(10, after: progressCard)
+        contentStack.addArrangedSubview(activityCard())
+        contentStack.setCustomSpacing(16, after: progressCard)
+        contentStack.addArrangedSubview(LazzyTheme.padded(
+            trophyList, insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16), radius: 20
+        ))
 
-        let section = LazzyTheme.row(LazzyTheme.label("À plusieurs, on va plus loin.", size: 18, weight: .bold), LazzyTheme.badge("DÉMO"))
-        contentStack.addArrangedSubview(section)
-        let teaser = LazzyTheme.stack([
-            LazzyTheme.label("Le campus est en marche", size: 17, weight: .bold),
-            LazzyTheme.label("Retrouve ta bande, compare vos pas et relevez le défi ensemble.", size: 14, color: LazzyTheme.muted),
-            LazzyTheme.button("Voir mes groupes", symbol: "arrow.up.right", filled: false) { [weak self] in self?.tabBarController?.selectedIndex = 2 }
-        ], spacing: 10)
-        contentStack.addArrangedSubview(LazzyTheme.padded(teaser))
         refreshControl.tintColor = LazzyTheme.green
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         scrollView.alwaysBounceVertical = true
         scrollView.refreshControl = refreshControl
     }
-    @objc private func updateProfile() {
-        greetingLabel.text = ProfileStore.shared.displayName
-        updateProgress()
+    private func activityCard() -> UIView {
+        let title = LazzyTheme.label("Activité du jour", size: 16, weight: .bold)
+        title.accessibilityTraits.insert(.header)
+        let header = LazzyTheme.stack([LazzyTheme.icon("heart.fill", color: LazzyTheme.orange, size: 14), title], axis: .horizontal, spacing: 8)
+        header.alignment = .center
+
+        let distance = LazzyTheme.stack([LazzyTheme.label("Distance à pied", size: 12, color: LazzyTheme.muted), distanceLabel], spacing: 4)
+        let calories = LazzyTheme.stack([LazzyTheme.label("Calories actives", size: 12, color: LazzyTheme.muted), caloriesLabel], spacing: 4)
+        distanceLabel.accessibilityLabel = "Distance à pied indisponible"
+        caloriesLabel.accessibilityLabel = "Calories actives indisponibles"
+        let metrics = LazzyTheme.stack([distance, calories], axis: .horizontal, spacing: 12)
+        metrics.distribution = .fillEqually
+        metrics.alignment = .top
+
+        let content = LazzyTheme.stack([header, metrics, healthLabel], spacing: 12)
+        return LazzyTheme.padded(content, insets: UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 16), radius: 20)
     }
-    private func showHealthDetails() {
-        guard !isLoadingHealthDetails else { return }
-        isLoadingHealthDetails = true
-        let displayedSteps = Int(steps)
-        healthManager.fetchStepDiagnostics { [weak self] details in
-            guard let self else { return }
-            self.isLoadingHealthDetails = false
-            self.message("Détails Santé", "Compteur Lazzy au moment de la demande : \(displayedSteps) pas\n\n\(details)")
+    @objc private func updateProfile() {
+        let profile = ProfileStore.shared
+        greetingLabel.text = profile.displayName
+        let photo = profile.avatar
+        profileAvatar.contentMode = photo == nil ? .scaleAspectFit : .scaleAspectFill
+        profileAvatar.image = photo ?? UIImage(systemName: "person.crop.circle.fill")
+        updateProgress()
+        updateTrophyList()
+    }
+    private func updateTrophyList() {
+        trophyList.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        let heading = LazzyTheme.label("Mes trophées", size: 20, weight: .bold)
+        heading.accessibilityTraits.insert(.header)
+        trophyList.addArrangedSubview(heading)
+
+        let earnedIDs = Set(TrophyStore.shared.earned.map(\.id))
+        for trophy in Trophy.all {
+            let earned = earnedIDs.contains(trophy.id)
+            let badge: UIView
+            if earned {
+                let emoji = LazzyTheme.label(trophy.badge, size: 23)
+                emoji.textAlignment = .center
+                badge = emoji
+            } else {
+                badge = LazzyTheme.icon("lock.fill", color: LazzyTheme.muted, size: 17)
+            }
+            badge.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            badge.widthAnchor.constraint(equalToConstant: 32).isActive = true
+            badge.heightAnchor.constraint(equalToConstant: 32).isActive = true
+
+            let name = LazzyTheme.label(trophy.name, size: 16, weight: .semibold, color: earned ? LazzyTheme.ink : LazzyTheme.muted)
+            let requirement = LazzyTheme.label(trophy.requirement, size: 13, color: LazzyTheme.muted)
+            let text = LazzyTheme.stack([name, requirement], spacing: 4)
+            let row = LazzyTheme.stack([badge, text], axis: .horizontal, spacing: 10)
+            row.alignment = .center
+            row.isAccessibilityElement = true
+            row.accessibilityIdentifier = "home.trophy.\(trophy.id)"
+            row.accessibilityLabel = "\(trophy.name), \(earned ? "obtenu" : "verrouillé"). \(trophy.requirement)"
+            trophyList.addArrangedSubview(row)
         }
+    }
+    private func showSettings() {
+        guard let storyboard else { return }
+        let settings = storyboard.instantiateViewController(withIdentifier: "settings")
+        let navigation = UINavigationController(rootViewController: settings)
+        navigation.modalPresentationStyle = .fullScreen
+        navigation.overrideUserInterfaceStyle = .light
+        navigation.navigationBar.tintColor = LazzyTheme.green
+        present(navigation, animated: true)
     }
     @objc private func refresh() {
         guard isViewLoaded else { return }
         guard healthManager.isAvailable else {
+            #if targetEnvironment(simulator)
             healthLabel.text = "Santé indisponible dans le simulateur"
+            #else
+            healthLabel.text = "Santé indisponible sur cet appareil"
+            #endif
             refreshControl.endRefreshing()
             return
         }
-        guard healthAuthorizationCompleted else { refreshControl.endRefreshing(); return }
         // Si la première lecture est encore en cours, son résultat terminera
         // aussi la roue du geste manuel, sans lancer de requête en double.
         guard !isRefreshing else { return }
         isRefreshing = true
-        healthManager.fetchTodayStepsResult { [weak self] result in
+        Task { [weak self] in
             guard let self else { return }
-            self.isRefreshing = false
-            switch result {
-            case .success(let steps):
-                self.steps = max(0, steps)
-                if steps.isFinite, steps >= 0, steps < Double(Int.max) {
-                    TrophyStore.shared.record(steps: Int(steps), goal: ProfileStore.shared.dailyGoal)
-                }
-                let time = Date().formatted(.dateTime.hour().minute().second().locale(Locale(identifier: "fr_FR")))
-                self.healthLabel.text = steps > 0 ? "Dernière lecture Santé : \(time)" : "Santé : aucun pas accessible · \(time)"
-            case .failure:
-                self.healthLabel.text = self.healthManager.isAvailable ? "Santé : tire vers le bas pour réessayer" : "Santé indisponible dans le simulateur"
+            defer {
+                isRefreshing = false
+                refreshControl.endRefreshing()
             }
-            self.updateProgress()
-            self.refreshControl.endRefreshing()
+            if !healthAuthorizationCompleted {
+                do {
+                    try await healthManager.requestAuthorization()
+                    healthAuthorizationCompleted = true
+                } catch {
+                    healthLabel.text = "Connexion Santé à vérifier · tire vers le bas pour réessayer"
+                    return
+                }
+            }
+
+            let date = Date()
+            let calendar = Calendar.current
+            let activity = await healthManager.fetchDailyActivity(date: date, calendar: calendar)
+            updateActivityCard(activity)
+            if let steps = activity.steps, steps < Double(Int.max) {
+                self.steps = steps
+                TrophyStore.shared.record(steps: Int(steps), goal: ProfileStore.shared.dailyGoal, date: date, calendar: calendar)
+                updateProgress()
+            }
+        }
+    }
+    private func updateActivityCard(_ activity: HealthManager.DailyActivity) {
+        let locale = Locale(identifier: "fr_FR")
+        let distance = activity.distanceKilometers.map { "\($0.formatted(.number.locale(locale).precision(.fractionLength(0...2)))) km" }
+        let calories = activity.activeKilocalories.map { "\($0.formatted(.number.locale(locale).precision(.fractionLength(0)))) kcal" }
+        distanceLabel.text = distance ?? "—"
+        distanceLabel.accessibilityLabel = distance ?? "Distance à pied indisponible"
+        caloriesLabel.text = calories ?? "—"
+        caloriesLabel.accessibilityLabel = calories ?? "Calories actives indisponibles"
+
+        let time = Date().formatted(.dateTime.hour().minute().locale(locale))
+        if activity.steps == nil {
+            healthLabel.text = "Pas indisponibles · tire vers le bas pour réessayer"
+        } else if distance == nil && calories == nil && activity.steps == 0 {
+            healthLabel.text = "Aucune donnée Santé accessible · \(time)"
+        } else if activity.steps == 0 {
+            healthLabel.text = "Aucun pas accessible · \(time)"
+        } else {
+            healthLabel.text = "Dernière lecture Santé : \(time)"
         }
     }
     private func updateProgress() {

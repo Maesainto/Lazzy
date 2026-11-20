@@ -141,11 +141,16 @@ enum LocalStore {
 final class ProfileStore {
     static let shared = ProfileStore()
     private let defaults = UserDefaults.standard
+    var hasSavedProfile: Bool { defaults.string(forKey: "lazzy.name") != nil }
     var name: String { defaults.string(forKey: "lazzy.name") ?? "Simon" }
     var displayName: String { name + (TrophyStore.shared.equipped.map { " " + $0.badge } ?? "") }
     var bio: String { defaults.string(forKey: "lazzy.bio") ?? "Un pas après l’autre." }
     var dailyGoal: Int { let goal = defaults.integer(forKey: "lazzy.goal"); return goal > 0 ? goal : 10000 }
     var avatar: UIImage? { UIImage(contentsOfFile: LocalStore.fileURL("profile.jpg").path) }
+    static func validatedName(_ input: String) -> String? {
+        let name = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        return (1...30).contains(name.count) ? name : nil
+    }
     func save(name: String, bio: String, goal: Int) {
         defaults.set(name, forKey: "lazzy.name"); defaults.set(bio, forKey: "lazzy.bio"); defaults.set(goal, forKey: "lazzy.goal")
         NotificationCenter.default.post(name: .lazzyProfileChanged, object: nil)

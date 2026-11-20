@@ -155,10 +155,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lazzy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lazzy;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Nous avons besoin d'accéder à vos pas pour valider vos objectifs quotidiens.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Lazzy lit tes pas pour suivre ton objectif, ainsi que ta distance à pied et tes calories actives pour afficher ton activité du jour.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -190,10 +189,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lazzy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lazzy;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Nous avons besoin d'accéder à vos pas pour valider vos objectifs quotidiens.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Lazzy lit tes pas pour suivre ton objectif, ainsi que ta distance à pied et tes calories actives pour afficher ton activité du jour.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

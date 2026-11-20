@@ -18,12 +18,13 @@ final class LazzyTabBarController: UITabBarController {
         }
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
-        let symbols = [("house", "house.fill"), ("square.grid.2x2", "square.grid.2x2.fill"),
-                       ("person.2", "person.2.fill"), ("slider.horizontal.3", "slider.horizontal.3")]
-        for (index, controller) in (viewControllers ?? []).enumerated() {
-            controller.tabBarItem.image = UIImage(systemName: symbols[index].0)
-            controller.tabBarItem.selectedImage = UIImage(systemName: symbols[index].1)
-            controller.tabBarItem.accessibilityIdentifier = ["tab.home", "tab.wall", "tab.groups", "tab.settings"][index]
+        let tabs = [("house", "house.fill", "tab.home"),
+                    ("square.grid.2x2", "square.grid.2x2.fill", "tab.wall"),
+                    ("person.2", "person.2.fill", "tab.groups")]
+        for (controller, (symbol, selectedSymbol, identifier)) in zip(viewControllers ?? [], tabs) {
+            controller.tabBarItem.image = UIImage(systemName: symbol)
+            controller.tabBarItem.selectedImage = UIImage(systemName: selectedSymbol)
+            controller.tabBarItem.accessibilityIdentifier = identifier
         }
     }
 }

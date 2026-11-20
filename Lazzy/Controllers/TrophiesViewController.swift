@@ -1,12 +1,11 @@
 import UIKit
 
 final class TrophiesViewController: UITableViewController {
-    private let friend: Friend?
     private let metrics: [Trophy.Metric] = [.dailySteps, .totalSteps, .goalDays]
-    private var earned: [Trophy] { friend?.trophies ?? TrophyStore.shared.earned }
-    private var equipped: Trophy? { friend == nil ? TrophyStore.shared.equipped : friend?.equippedTrophy }
-    init(friend: Friend? = nil) { self.friend = friend; super.init(style: .insetGrouped) }
-    required init?(coder: NSCoder) { fatalError("Utiliser init(friend:)") }
+    private var earned: [Trophy] { TrophyStore.shared.earned }
+    private var equipped: Trophy? { TrophyStore.shared.equipped }
+    init() { super.init(style: .insetGrouped) }
+    required init?(coder: NSCoder) { fatalError("Utiliser init()") }
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Trophées"
@@ -20,7 +19,7 @@ final class TrophiesViewController: UITableViewController {
     }
     @objc private func reload() {
         guard isViewLoaded else { return }
-        let name = friend?.displayName ?? ProfileStore.shared.displayName
+        let name = ProfileStore.shared.displayName
         let label = LazzyTheme.label("\(name)\n\(earned.count) / \(Trophy.all.count) trophées", size: 22, weight: .bold)
         label.textAlignment = .center
         label.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 110)
@@ -44,7 +43,7 @@ final class TrophiesViewController: UITableViewController {
         var detail = trophy.requirement
         if equipped?.id == trophy.id { detail += "\nBadge équipé" }
         else if unlocked { detail += "\nObtenu" }
-        else if friend == nil {
+        else {
             detail += "\n\(min(TrophyStore.shared.value(for: trophy.metric), trophy.target).stepsText) / \(trophy.target.stepsText)"
         }
         content.secondaryText = detail; content.secondaryTextProperties.numberOfLines = 0
@@ -53,14 +52,14 @@ final class TrophiesViewController: UITableViewController {
         let icon = LazzyTheme.icon(symbol, color: unlocked ? LazzyTheme.green : LazzyTheme.muted, size: 20)
         icon.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
         cell.accessoryView = icon
-        cell.selectionStyle = friend == nil && unlocked ? .default : .none
+        cell.selectionStyle = unlocked ? .default : .none
         cell.accessibilityIdentifier = "trophy.\(trophy.id)"
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let trophy = trophies(indexPath.section)[indexPath.row]
-        guard friend == nil, earned.contains(where: { $0.id == trophy.id }) else { return }
+        guard earned.contains(where: { $0.id == trophy.id }) else { return }
         let isEquipped = equipped?.id == trophy.id
         let alert = UIAlertController(title: "\(trophy.badge) \(trophy.name)", message: trophy.requirement, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: isEquipped ? "Retirer le badge" : "Équiper le badge", style: .default) { _ in
@@ -91,11 +90,7 @@ final class FriendProfileViewController: UIViewController {
             LazzyTheme.label("\(friend.dailyGoal.stepsText) pas", size: 22, weight: .bold),
             LazzyTheme.label("\(friend.steps.stepsText) pas aujourd’hui", size: 14, color: LazzyTheme.muted)
         ], spacing: 12))
-        let trophies = LazzyTheme.button("Trophées · \(friend.trophies.count) / \(Trophy.all.count)", symbol: "trophy") { [weak self] in
-            guard let self else { return }
-            self.navigationController?.pushViewController(TrophiesViewController(friend: self.friend), animated: true)
-        }
-        let stack = LazzyTheme.stack([header, profile, trophies, LazzyTheme.label("Trophées obtenus", size: 21, weight: .bold)], spacing: 24)
+        let stack = LazzyTheme.stack([header, profile, LazzyTheme.label("Trophées obtenus", size: 21, weight: .bold)], spacing: 24)
         if friend.trophies.isEmpty { stack.addArrangedSubview(LazzyTheme.label("Aucun trophée", color: LazzyTheme.muted)) }
         for trophy in friend.trophies {
             stack.addArrangedSubview(LazzyTheme.padded(LazzyTheme.stack([
